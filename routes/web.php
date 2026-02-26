@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,10 @@ Route::controller(ThemeController::class)->name('theme.')->group(function(){
     Route::get('/single_blog','SingleBloge')->name('single_blog');
 
 });
+
+Route::post('/subscriber/store',[SubscriberController::class,'store'])->name('subscriber.store');
+
+
 Route::get('/master', function () {
     return view('master');
 });
