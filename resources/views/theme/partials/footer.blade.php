@@ -20,24 +20,24 @@
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
                         <form action="{{ route('subscriber.store') }}" method="post" class="form-inline">
-@csrf
+                            @csrf
                             <div class="d-flex flex-row">
 
                                 <input class="form-control" name="email" placeholder="Enter Email"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-                                     type="email" value="{{ old('email') }}">
+                                    type="email" value="{{ old('email') }}">
 
 
                                 <button type="submit" class="btn btn-default"><span
                                         class="lnr lnr-arrow-right"></span></button>
-                                        
-                                        <!-- <div class="col-lg-4 col-md-4">
+
+                                <!-- <div class="col-lg-4 col-md-4">
                                           <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
                                         </div>  -->
-                                      </div>
-                                      @error('email')
-                                          <span class="text-danger">{{ $message }}</span>
-                                      @enderror
+                            </div>
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             <div class="info"></div>
                         </form>
                     </div>
