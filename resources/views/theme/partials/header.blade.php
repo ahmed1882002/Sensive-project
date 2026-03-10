@@ -41,12 +41,15 @@
                     </ul>
 
                     <!-- Add new blog -->
-                    <a href="#" class="btn btn-sm btn-primary mr-2">Add New</a>
+                    @if (Auth::check())
+                        
+                    <a href="{{ route('blogs.create') }}" class="btn btn-sm btn-primary mr-2">Add New</a>
                     <!-- End - Add new blog -->
+                    @endif
 
                     <ul class="nav navbar-nav navbar-right navbar-social">
                         @if (!Auth::check())
-                            <a href="{{ route('register') }}" class="btn btn-sm btn-warning">Register / Login</a>
+                            <a href="{{ route('login') }}" class="btn btn-sm btn-warning">Register / Login</a>
                         @else
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"

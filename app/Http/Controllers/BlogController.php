@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
+    public function __construct()
+    {
+        // throw new \Exception('Not implemented');
+        $this->middleware('auth')->only(['create']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +27,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('theme.blogs.create');
+        $categories = Category::get();
+        return view('theme.blogs.create', compact('categories'));
     }
 
     /**
@@ -28,7 +36,26 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'category_id' => 'required|exists:categories,id'
+            ],
+            [],
+            [
+                'category_id' => 'category'
+            ]
+        );
+        //File Upload & Storage Handling"
+        $image = $request->image;
+        $newInageName = time() . '-' . $image->getClientOriginalName();
+        $image->storeAs('blogs', $newInageName, 'public');
+        $data['image'] = $newInageName;
+        $data['user_id'] = Auth::id();
+        Blog::create($data);
+        return redirect()->back()->with('success_store_blog', 'Blog created successfully.');
     }
 
     /**
