@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriberController;
@@ -21,16 +22,18 @@ use Illuminate\Support\Facades\Route;
 Route::controller(ThemeController::class)->name('theme.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/contact', 'contact')->name('contact');
-    Route::get('/category', 'category')->name('category');
+    Route::get('/category/{category}', 'category')->name('category');
     // Route::get('/login','login')->name('login');
     // Route::get('/register','register')->name('register');
-    Route::get('/single_blog', 'SingleBloge')->name('single_blog');
-});
+    // Route::get('/single_blog/{blog}', 'SingleBloge')->name('single_blog');
+}); 
+
+Route::post('/comments/{blog}', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
 
 Route::post('/subscriber/store', [SubscriberController::class, 'store'])->name('subscriber.store');
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
-Route::resource('blogs', BlogController::class);
+Route::resource('blogs', BlogController::class)->middleware('auth');
 
 // -----------------------------
 

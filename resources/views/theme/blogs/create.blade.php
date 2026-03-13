@@ -97,6 +97,11 @@
             font-weight: 300;
         }
 
+        .blog-form-card textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
         /* File input */
         .file-input-wrapper {
             position: relative;
@@ -234,9 +239,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Description</label>
-                                <input class="form-control" name="description" id="description" type="text"
-                                    value="{{ old('description') }}" placeholder="Brief description of your post">
+                                <label for="description">Description / Content</label>
+                                <textarea class="form-control" name="description" id="description" placeholder="Write your blog content here...">{{ old('description') }}</textarea>
                                 @error('description')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

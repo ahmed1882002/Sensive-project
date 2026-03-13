@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::paginate(2);
+        $blogs = Blog::paginate(4);
         return view('theme.index', compact('blogs'));
     }
     public function contact()
     {
         return view('theme.contact');
     }
-    public function category()
+    public function category(Category $category)
     {
-        return view('theme.category');
+        $blogs = $category->blogs()->paginate(4);
+        return view('theme.category', compact('category', 'blogs'));
     }
     public function login()
     {
@@ -28,8 +30,9 @@ class ThemeController extends Controller
     {
         return view('theme.register');
     }
-    public function SingleBloge()
+    public function SingleBloge(Blog $blog)
     {
-        return view('theme.single-blog');
+        $blog->load('comments.user');
+        return view('theme.single-blog', compact('blog'));
     }
 }

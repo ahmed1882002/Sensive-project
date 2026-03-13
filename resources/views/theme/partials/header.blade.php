@@ -13,7 +13,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> ال
                     <span class="icon-bar"></span>
                 </button>
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -22,15 +22,14 @@
                         <li class="nav-item @yield('active-home')"><a class="nav-link"
                                 href="{{ route('theme.index') }}">Home</a></li>
                         <li class="nav-item submenu dropdown @yield('active-category')">
-                            <a href="{{ route('theme.category') }}" class="nav-link dropdown-toggle"
-                                data-toggle="dropdown" role="button" aria-haspopup="true"
-                                aria-expanded="false">Categories</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">Categories</a>
                             @if (count($handlecategories) > 0)
 
                                 <ul class="dropdown-menu">
                                     @foreach ($handlecategories as $category)
                                         <li class="nav-item"><a class="nav-link"
-                                                href="{{ route('theme.category', ['category' => $category->name]) }}">{{ $category->name }}</a>
+                                                href="{{ route('theme.category', ['category' => $category->id]) }}">{{ $category->name }}</a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -42,9 +41,8 @@
 
                     <!-- Add new blog -->
                     @if (Auth::check())
-                        
-                    <a href="{{ route('blogs.create') }}" class="btn btn-sm btn-primary mr-2">Add New</a>
-                    <!-- End - Add new blog -->
+                        <a href="{{ route('blogs.create') }}" class="btn btn-sm btn-primary mr-2">Add New</a>
+                        <!-- End - Add new blog -->
                     @endif
 
                     <ul class="nav navbar-nav navbar-right navbar-social">
@@ -53,9 +51,16 @@
                         @else
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('assets/img/avatar.png') }}"
+                                        alt="Profile" class="rounded-circle"
+                                        style="width: 30px; height: 30px; object-fit: cover;">
+                                </a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="blog-details.html">My Blogs</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('blogs.index') }}">My
+                                            Blogs</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.edit') }}">Profile
+                                            Settings</a></li>
                                     <form action="{{ route('logout') }}" method="post">
                                         @csrf
                                         <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}"
